@@ -1,0 +1,365 @@
+/* --- Globals & Variables --- */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+/* Font Awesome đã link trong HTML */
+
+:root {
+    /* Màu sắc */
+    --bg-color: #0d1117; /* Nền siêu tối */
+    --container-bg: #161b22; /* Nền container tối hơn */
+    --text-color: #c9d1d9; /* Màu chữ sáng nhẹ */
+    --accent-color: #238636; /* Màu nhấn xanh lá (lấy cảm hứng từ GitHub) */
+    --primary-button-color: #238636; /* Nút màu xanh lá */
+    --hover-button-color: #2ea043; /* Nút hover xanh đậm hơn */
+    --border-color: #30363d; /* Màu border phân cách */
+    --glow-color: #58a6ff; /* Màu glow xanh dương */
+    --error-color: #f85149; /* Màu lỗi đỏ */
+    --initial-text-color: #8b949e; /* Màu chữ mờ */
+
+    /* Màu tin nhắn */
+    --user-message-bg: #21262d; /* Nền tin nhắn user */
+    --agent-message-bg: #0e193b; /* Nền tin nhắn agent (giữ màu xanh tím) */
+    --agent-message-text: #e9d8f4; /* Màu chữ agent (giữ màu sáng) */
+
+    /* Khoảng cách */
+    --spacing-small: 8px;
+    --spacing-medium: 15px;
+    --spacing-large: 20px;
+    --spacing-xlarge: 30px;
+}
+
+/* --- Base Styles --- */
+body {
+    font-family: 'Share Tech Mono', monospace;
+    line-height: 1.6; /* Điều chỉnh line-height cho dễ đọc */
+    margin: 0;
+    padding: var(--spacing-large);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+/* --- Container Layout --- */
+.container {
+    background-color: var(--container-bg);
+    padding: var(--spacing-xlarge);
+    border-radius: 8px; /* Giảm bo tròn nhẹ nhàng */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Bóng đổ mềm mại hơn */
+    width: 100%;
+    max-width: 700px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - calc(2 * var(--spacing-large))); /* Tính toán chiều cao dựa trên padding body */
+    max-height: calc(100vh - calc(2 * var(--spacing-large)));
+    overflow: hidden;
+    position: relative; /* Cho phép định vị các hiệu ứng tuyệt đối */
+}
+
+/* --- Header --- */
+.header {
+    margin-bottom: var(--spacing-large);
+    flex-shrink: 0;
+    text-align: center;
+}
+
+h1 {
+    color: var(--text-color);
+    margin-bottom: var(--spacing-small);
+    font-size: 2.2em; /* Tăng kích thước tiêu đề */
+    text-transform: uppercase;
+    letter-spacing: 2px; /* Thêm khoảng cách chữ */
+}
+
+.tech-glow {
+    color: var(--glow-color);
+    text-shadow: 0 0 8px var(--glow-color), 0 0 12px var(--glow-color); /* Hiệu ứng glow mạnh hơn */
+}
+
+.header p {
+    font-size: 1em;
+    color: var(--initial-text-color);
+}
+
+/* --- Chat Area --- */
+.chat-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: var(--spacing-medium) 0; /* Padding trên dưới */
+    margin-bottom: var(--spacing-medium);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-medium); /* Khoảng cách giữa các tin nhắn */
+}
+
+/* Tùy chỉnh thanh cuộn */
+.chat-area::-webkit-scrollbar { width: 8px; }
+.chat-area::-webkit-scrollbar-track { background: var(--container-bg); }
+.chat-area::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+.chat-area::-webkit-scrollbar-thumb:hover { background: var(--glow-color); }
+
+/* --- Message Base --- */
+.message {
+    display: flex;
+    align-items: flex-start;
+    /* margin-bottom đã thay bằng gap trong chat-area */
+    opacity: 0;
+    animation: fadeInMessage 0.5s ease forwards;
+    max-width: 95%; /* Tăng chiều rộng tối đa */
+}
+
+@keyframes fadeInMessage {
+    to { opacity: 1; }
+}
+
+.message .icon {
+    font-size: 1.6em; /* Tăng kích thước icon */
+    margin-right: var(--spacing-small);
+    flex-shrink: 0;
+    line-height: 1; /* Căn icon theo dòng đầu tiên của text */
+}
+
+.message-content {
+    padding: var(--spacing-small) var(--spacing-medium); /* Điều chỉnh padding content */
+    border-radius: 6px; /* Bo tròn content */
+    max-width: calc(100% - 30px); /* Trừ khoảng trống cho icon và margin */
+    word-break: break-word;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Bóng đổ subtle hơn */
+    flex-grow: 1; /* Cho phép content co giãn */
+}
+
+/* --- User Message --- */
+.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+.user-message .icon { color: var(--text-color); margin-right: 0; margin-left: var(--spacing-small); }
+.user-message .message-content {
+    background-color: var(--user-message-bg);
+    border-bottom-right-radius: 2px;
+}
+
+/* --- Agent Message --- */
+.agent-message {
+    align-self: flex-start;
+}
+.agent-message .icon { color: var(--glow-color); }
+.agent-message .message-content {
+    background-color: var(--agent-message-bg);
+    color: var(--agent-message-text); /* Sử dụng màu chữ riêng cho agent */
+    border-bottom-left-radius: 2px;
+}
+
+/* --- Initial Message (Agent Greeting) --- */
+.initial-message {
+     /* Kế thừa agent-message */
+    justify-content: center; /* Căn giữa tin nhắn chào mừng */
+    align-self: center;
+    text-align: center;
+    margin-bottom: var(--spacing-medium); /* margin-bottom riêng */
+    max-width: 80%; /* Giới hạn chiều rộng */
+}
+.initial-message .icon { display: none; } /* Ẩn icon cho tin nhắn chào mừng */
+.initial-message .message-content {
+    background-color: transparent;
+    box-shadow: none;
+    font-style: italic;
+    color: var(--initial-text-color);
+    padding: 0;
+}
+
+/* --- Typing Indicator --- */
+.typing-indicator {
+    /* Kế thừa agent-message base */
+    color: var(--initial-text-color);
+    font-style: italic;
+}
+/* Giữ lại icon robot */
+.typing-indicator .message-content {
+     /* Kế thừa agent-message content */
+     background-color: var(--agent-message-bg);
+     /* Animation chấm chấm nếu JS không thêm */
+     /* content: '...'; animation: blink 1s infinite steps(1); */
+}
+
+/* --- Result Item Alignment (within Agent Message Content) --- */
+.message-content .country-info-item {
+    display: flex;
+    gap: var(--spacing-small); /* Khoảng cách nhỏ hơn giữa label và value */
+    margin-bottom: var(--spacing-small); /* Khoảng cách giữa các dòng */
+    align-items: baseline;
+}
+
+.message-content .country-info-item strong {
+    color: var(--glow-color);
+    /* Điều chỉnh width cố định cho nhãn */
+    width: 150px; /* Có thể điều chỉnh giá trị này */
+    flex-shrink: 0;
+    text-align: left;
+}
+
+.message-content .country-info-item:last-child {
+     margin-bottom: 0; /* Dòng cuối không có margin-bottom */
+}
+
+/* --- Error Message --- */
+.error-message {
+    /* Kế thừa message base */
+}
+.error-message .icon { color: var(--error-color); }
+.error-message .message-content {
+    background-color: rgba(var(--error-color), 0.1); /* Nền màu đỏ mờ hơn */
+    color: var(--error-color);
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid var(--error-color); /* Thêm border màu đỏ */
+}
+
+
+/* --- Input Area --- */
+.input-area {
+    margin-top: auto;
+    padding-top: var(--spacing-medium);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: var(--spacing-medium);
+    align-items: center;
+    flex-shrink: 0;
+}
+
+#countryInput {
+    flex-grow: 1;
+    padding: var(--spacing-small) var(--spacing-medium);
+    border: 1px solid var(--border-color);
+    border-radius: 4px; /* Góc bo tròn nhỏ hơn */
+    font-size: 1em;
+    background-color: var(--container-bg); /* Nền input giống container */
+    color: var(--text-color);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#countryInput::placeholder {
+    color: var(--initial-text-color);
+    opacity: 0.6;
+}
+
+#countryInput:focus {
+    border-color: var(--glow-color);
+    box-shadow: 0 0 5px rgba(var(--glow-color), 0.5); /* Bóng đổ glow subtle hơn */
+}
+
+
+#searchButton {
+    padding: var(--spacing-small) var(--spacing-medium);
+    background-color: var(--primary-button-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-small);
+}
+
+#searchButton:hover {
+    background-color: var(--hover-button-color);
+}
+
+#searchButton:active {
+    transform: scale(0.98);
+}
+
+#searchButton:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    body {
+        padding: var(--spacing-medium);
+    }
+
+    .container {
+        padding: var(--spacing-large);
+        min-height: calc(100vh - calc(2 * var(--spacing-medium)));
+        max-height: calc(100vh - calc(2 * var(--spacing-medium)));
+    }
+
+    h1 {
+        font-size: 1.8em;
+        letter-spacing: 1px;
+    }
+
+    .header p {
+        font-size: 0.9em;
+    }
+
+    .chat-area {
+        padding: var(--spacing-small) 0;
+        gap: var(--spacing-medium);
+    }
+
+    .message {
+        max-width: 100%; /* Cho phép tin nhắn chiếm toàn bộ chiều rộng trên màn hình nhỏ */
+        margin-bottom: 0; /* Khoảng cách do gap trong chat-area xử lý */
+    }
+
+     .message .icon {
+         font-size: 1.4em;
+         margin-right: var(--spacing-small);
+         margin-left: 0; /* Reset margin-left cho user icon */
+     }
+     .user-message .icon {
+          margin-right: 0;
+          margin-left: var(--spacing-small); /* Margin-left cho user icon */
+     }
+
+     .message-content {
+         padding: var(--spacing-small);
+     }
+
+    /* Responsive cho các dòng thông tin quốc gia */
+    .message-content .country-info-item {
+        flex-direction: column; /* Xếp nhãn và giá trị chồng lên nhau */
+        gap: 2px;
+         align-items: flex-start;
+         margin-bottom: var(--spacing-small);
+    }
+
+    .message-content .country-info-item strong {
+        width: auto; /* Bỏ chiều rộng cố định */
+        flex-shrink: unset;
+        color: rgba(var(--glow-color), 0.8); /* Làm mờ nhãn */
+    }
+
+    .input-area {
+        flex-direction: column;
+        gap: var(--spacing-small);
+        padding-top: var(--spacing-medium);
+    }
+
+    #countryInput, #searchButton {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #searchButton {
+        justify-content: center;
+        padding: var(--spacing-small) var(--spacing-large); /* Tăng padding ngang nút trên mobile */
+    }
+}

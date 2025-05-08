@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Tra Cứu Quốc Gia</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Link Font Awesome cho icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Link font chữ techy -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><span class="tech-glow">AI Agent</span> Tra Cứu Quốc Gia</h1>
+            <p>Hỏi tôi về bất kỳ quốc gia nào!</p>
+        </div>
+
+        <!-- Khu vực hiển thị chat/kết quả -->
+        <div id="chatArea" class="chat-area">
+             <div class="message agent-message initial-message">
+                <i class="fas fa-robot icon"></i>
+                <div class="message-content">
+                    <p>Chào bạn! Tôi là AI Agent tra cứu thông tin quốc gia. Bạn muốn biết về quốc gia nào?</p>
+                </div>
+            </div>
+             <!-- Các tin nhắn user và agent sẽ được thêm vào đây bằng JS -->
+        </div>
+
+
+        <div class="input-area">
+            <input type="text" id="countryInput" placeholder="Nhập tên quốc gia (VD: Việt Nam, South Korea)...">
+            <button id="searchButton"><i class="fas fa-search"></i> Tra Cứu</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
