@@ -1,40 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Agent Tra Cứu Quốc Gia</title>
+    <title>AI Geo Agent</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Link Font Awesome cho icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Link font chữ techy -->
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Optional: Add a modern font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+             /* Use Roboto or Orbitron for headings/special elements */
+            font-family: 'Roboto', sans-serif;
+        }
+        .header h1, .panel-header {
+            font-family: 'Orbitron', sans-serif;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1><span class="tech-glow">AI Agent</span> Tra Cứu Quốc Gia</h1>
-            <p>Hỏi tôi về bất kỳ quốc gia nào!</p>
-        </div>
+        <header class="header">
+            <h1>AI Geo Agent</h1>
+            <p>Tra cứu thông tin quốc gia một cách thông minh và trực quan</p>
+        </header>
 
-        <!-- Khu vực hiển thị chat/kết quả -->
-        <div id="chatArea" class="chat-area">
-             <div class="message agent-message initial-message">
-                <i class="fas fa-robot icon"></i>
-                <div class="message-content">
-                    <p>Chào bạn! Tôi là AI Agent tra cứu thông tin quốc gia. Bạn muốn biết về quốc gia nào?</p>
+        <main class="main-content">
+            <div class="left-panel">
+                <div class="chat-section panel">
+                    <div class="panel-header">Chat với AI</div>
+                    <div id="chat-box" class="chat-box">
+                        <div class="message bot-message">
+                            Xin chào! Tôi là AI Geo Agent, tôi có thể giúp gì cho bạn về các quốc gia? Hãy hỏi tôi về thông tin, thời tiết, tin tức, so sánh hoặc gợi ý du lịch nhé!
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="user-input" placeholder="Nhập câu hỏi của bạn...">
+                        <button id="send-button">Gửi</button>
+                        <button id="voice-input-button" title="Nhập bằng giọng nói">🎤</button>
+                    </div>
                 </div>
+
+                 <!-- Updated: Simplified to History only -->
+                 <div class="history-section panel">
+                     <div class="panel-header">Lịch sử tìm kiếm</div>
+                     <div id="history-content" class="history-list">
+                         <!-- History items will be loaded here by JS -->
+                         <p>Đang tải lịch sử...</p>
+                     </div>
+                 </div>
+                 <!-- End Updated Section -->
             </div>
-             <!-- Các tin nhắn user và agent sẽ được thêm vào đây bằng JS -->
-        </div>
 
+            <div class="right-panel">
+                 <div class="map-section panel">
+                     <div class="panel-header">Bản đồ thế giới</div>
+                     <div id="mapid" class="map-container">
+                         <!-- Map will be initialized here by Leaflet -->
+                     </div>
+                     <div class="map-controls">
+                         <label for="filter-language">Lọc theo ngôn ngữ:</label>
+                         <select id="filter-language">
+                            <option value="">Tất cả</option>
+                            <!-- Options will be loaded by JS or hardcoded -->
+                         </select>
+                         <!-- Add more filters if needed, e.g., region -->
+                     </div>
+                 </div>
+            </div>
+        </main>
 
-        <div class="input-area">
-            <input type="text" id="countryInput" placeholder="Nhập tên quốc gia (VD: Việt Nam, South Korea)...">
-            <button id="searchButton"><i class="fas fa-search"></i> Tra Cứu</button>
-        </div>
+        <footer class="footer">
+            <p>© 2023 AI Geo Agent Project. Powered by Google AI & Public APIs.</p>
+        </footer>
     </div>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Your main script -->
     <script src="script.js"></script>
 </body>
 </html>
